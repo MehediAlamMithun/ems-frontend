@@ -68,7 +68,7 @@ const Performance = () => {
           value={score}
           onChange={(e) => setScore(e.target.value)}
           className="w-full p-2 border rounded"
-          placeholder="Score (e.g. 80)"
+          placeholder="Score (0-10)"
           required
         />
 

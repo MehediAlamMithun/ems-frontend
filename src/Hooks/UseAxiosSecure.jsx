@@ -1,23 +1,30 @@
 import axios from "axios";
-import { useEffect } from "react";
-
-const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000", // ✅ your backend URL
-});
+import { useEffect, useRef } from "react";
 
 const UseAxiosSecure = () => {
+  const axiosSecureRef = useRef(
+    axios.create({
+      baseURL: "https://ems-server-gray.vercel.app/",
+      withCredentials: true,
+    })
+  );
+
   useEffect(() => {
-    // Add interceptor to attach token
-    axiosSecure.interceptors.request.use((config) => {
+    const instance = axiosSecureRef.current;
+    const requestInterceptor = instance.interceptors.request.use((config) => {
       const token = localStorage.getItem("access-token");
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
       return config;
     });
+
+    return () => {
+      instance.interceptors.request.eject(requestInterceptor);
+    };
   }, []);
 
-  return axiosSecure;
+  return axiosSecureRef.current;
 };
 
 export default UseAxiosSecure;

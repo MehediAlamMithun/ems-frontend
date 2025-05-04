@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import UseAxiosSecure from "../Hooks/UseAxiosSecure";
-import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 
 const Feedback = () => {
   const [dailyFeedback, setDailyFeedback] = useState([]);
-  const [performancePoints, setPerformancePoints] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const axiosSecure = UseAxiosSecure();
@@ -16,7 +14,6 @@ const Feedback = () => {
       try {
         const res = await axiosSecure.get(`/feedback?email=${user?.email}`);
         setDailyFeedback(res.data.dailyFeedback || []);
-        setPerformancePoints(res.data.performancePoints || 0);
       } catch (err) {
         console.error("❌ Failed to fetch feedback:", err);
       }
@@ -31,20 +28,18 @@ const Feedback = () => {
     return "❌ Not Rated";
   };
 
-  const feedbackForPerformance = (points) => {
-    if (points >= 8) return "🌟 Outstanding";
-    if (points >= 5) return "✅ Satisfactory";
-    if (points > 0) return "⚠️ Could Improve";
+  const feedbackForPerformance = (score) => {
+    if (score >= 8) return "🌟 Outstanding";
+    if (score >= 5) return "✅ Satisfactory";
+    if (score > 0) return "⚠️ Could Improve";
     return "❌ No Mark Given";
   };
 
   const feedbackForAttendance = (clockIn, clockOut) => {
     if (!clockIn || !clockOut) return "❌ Missing";
-
     const [inH, inM] = clockIn.split(":").map(Number);
     const [outH, outM] = clockOut.split(":").map(Number);
     const worked = (outH + outM / 60) - (inH + inM / 60);
-
     if (worked >= 8) return `✅ Full Shift (${worked.toFixed(1)} hrs)`;
     if (worked > 0) return `⚠️ Partial Shift (${worked.toFixed(1)} hrs)`;
     return "❌ Invalid Time";
@@ -62,7 +57,6 @@ const Feedback = () => {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-6">📋 Daily Feedback</h2>
-
       {dailyFeedback.length === 0 ? (
         <p>No feedback available yet.</p>
       ) : (
@@ -76,14 +70,14 @@ const Feedback = () => {
                 <h3 className="text-lg font-semibold mb-2">📅 {entry.date}</h3>
 
                 <p>
-                  🕒 Clock In: <strong>{entry.clockIn || "N/A"}</strong>{" "}
+                  🕒 Clock In: <strong>{entry.clockIn}</strong>{" "}
                   <span className="text-sm text-gray-600">
                     ({feedbackForAttendance(entry.clockIn, entry.clockOut)})
                   </span>
                 </p>
 
                 <p>
-                  🕔 Clock Out: <strong>{entry.clockOut || "N/A"}</strong>
+                  🕔 Clock Out: <strong>{entry.clockOut}</strong>
                 </p>
 
                 <p>
@@ -94,13 +88,13 @@ const Feedback = () => {
                 </p>
 
                 <p>
-                  🧠 Performance: <strong>{performancePoints}</strong>{" "}
+                  🧠 Performance: <strong>{entry.performanceScore ?? "—"}</strong>{" "}
                   <span className="text-sm text-gray-600">
-                    ({feedbackForPerformance(performancePoints)})
+                    ({feedbackForPerformance(entry.performanceScore ?? 0)})
                   </span>
                 </p>
 
-                <p>💸 Payroll: <strong>{entry.payroll || "N/A"}</strong></p>
+                <p>💸 Payroll: <strong>{entry.payroll}</strong></p>
               </div>
             ))}
           </div>

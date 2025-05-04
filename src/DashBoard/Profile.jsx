@@ -95,7 +95,7 @@ const Profile = () => {
     <th className="p-2 border">Clock Out</th>
     <th className="p-2 border">Payroll ($)</th>
     <th className="p-2 border">Communication (0–10)</th>
-    <th className="p-2 border">Performance (0–100)</th>
+    <th className="p-2 border">Performance (0–10)</th>
     {userData.role === "admin" && (
       <th className="p-2 border text-center">Actions</th>
     )}

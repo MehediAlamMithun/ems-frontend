@@ -24,7 +24,7 @@ const Feedback = () => {
   const feedbackForCommunication = (rating) => {
     if (rating >= 8) return "🌟 Excellent";
     if (rating >= 6) return "👍 Good";
-    if (rating > 0) return "⚠️ Needs Improvement";
+    if (rating > 0) return " Needs Improvement";
     return "❌ Not Rated";
   };
 

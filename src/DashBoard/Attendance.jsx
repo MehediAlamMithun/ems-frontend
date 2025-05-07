@@ -13,14 +13,14 @@ const Attendance = () => {
     date: "",
     weekDay: "",
     clockIn: "",
-    clockOut: ""
+    clockOut: "",
   });
 
   const getCurrentDayInfo = () => {
     const now = new Date();
     const weekDay = now.toLocaleDateString("en-US", { weekday: "long" });
     const date = now.toISOString().split("T")[0];
-    const time = now.toTimeString().split(" ")[0].slice(0, 5); 
+    const time = now.toTimeString().split(" ")[0].slice(0, 5);
     return { date, weekDay, time };
   };
 
@@ -37,7 +37,7 @@ const Attendance = () => {
             date,
             weekDay: entry.weekDay,
             clockIn: entry.clockIn || "",
-            clockOut: entry.clockOut || ""
+            clockOut: entry.clockOut || "",
           });
         } else {
           const { weekDay } = getCurrentDayInfo();
@@ -52,9 +52,9 @@ const Attendance = () => {
       Swal.fire("Please wait", "User data is still loading...", "info");
       return;
     }
-  
+
     const { date, weekDay, time } = getCurrentDayInfo();
-  
+
     try {
       await axiosPublic.patch(`/users/${userData._id}`, {
         action: "clockIn",
@@ -62,7 +62,7 @@ const Attendance = () => {
         weekDay,
         clockIn: time,
       });
-  
+
       Swal.fire("Clocked In!", `You clocked in at ${time}`, "success");
       setToday((prev) => ({ ...prev, clockIn: time }));
     } catch (err) {
@@ -70,7 +70,6 @@ const Attendance = () => {
       Swal.fire("Error", "Failed to clock in", "error");
     }
   };
-  
 
   const handleClockOut = async () => {
     const { date, time } = getCurrentDayInfo();
@@ -79,7 +78,7 @@ const Attendance = () => {
       await axiosPublic.patch(`/users/${userData._id}`, {
         action: "clockOut",
         date,
-        clockOut: time
+        clockOut: time,
       });
 
       Swal.fire("Clocked Out!", `You clocked out at ${time}`, "success");
@@ -89,14 +88,22 @@ const Attendance = () => {
       Swal.fire("Error", "Failed to clock out", "error");
     }
   };
-
+  // I Used Tailwind CSS Library for styling
   return (
     <div className="max-w-xl mx-auto bg-white p-6 rounded shadow text-center">
       <h2 className="text-2xl font-bold mb-4">Today's Attendance</h2>
-      <p className="mb-2 text-gray-700"><strong>Date:</strong> {today.date}</p>
-      <p className="mb-2 text-gray-700"><strong>Day:</strong> {today.weekDay}</p>
-      <p className="mb-2 text-green-600"><strong>Clock In:</strong> {today.clockIn || "--:--"}</p>
-      <p className="mb-4 text-red-600"><strong>Clock Out:</strong> {today.clockOut || "--:--"}</p>
+      <p className="mb-2 text-gray-700">
+        <strong>Date:</strong> {today.date}
+      </p>
+      <p className="mb-2 text-gray-700">
+        <strong>Day:</strong> {today.weekDay}
+      </p>
+      <p className="mb-2 text-green-600">
+        <strong>Clock In:</strong> {today.clockIn || "--:--"}
+      </p>
+      <p className="mb-4 text-red-600">
+        <strong>Clock Out:</strong> {today.clockOut || "--:--"}
+      </p>
 
       <div className="space-x-4">
         <button

@@ -38,28 +38,27 @@ const Feedback = () => {
   const feedbackForAttendance = (clockIn, clockOut) => {
     if (!clockIn || !clockOut) return "Missing";
 
-  const [inH, inM] = clockIn.split(":").map(Number);
-  const [outH, outM] = clockOut.split(":").map(Number);
-  const worked = (outH + outM / 60) - (inH + inM / 60);
+    const [inH, inM] = clockIn.split(":").map(Number);
+    const [outH, outM] = clockOut.split(":").map(Number);
+    const worked = outH + outM / 60 - (inH + inM / 60);
 
-  let result = "";
+    let result = "";
 
-  if (worked >= 9) {
-    result = `Overtime (${worked.toFixed(1)} hrs)`;
-  } else if (worked >= 8) {
-    result = `Full Shift (${worked.toFixed(1)} hrs)`;
-  } else if (worked > 0) {
-    result = `Partial Shift (${worked.toFixed(1)} hrs)`;
-  } else {
-    return "Invalid Time";
-  }
+    if (worked >= 9) {
+      result = `Overtime (${worked.toFixed(1)} hrs)`;
+    } else if (worked >= 8) {
+      result = `Full Shift (${worked.toFixed(1)} hrs)`;
+    } else if (worked > 0) {
+      result = `Partial Shift (${worked.toFixed(1)} hrs)`;
+    } else {
+      return "Invalid Time";
+    }
 
-  
-  if (inH > 9 || (inH === 9 && inM > 15)) {
-    result += " - Late Arrival";
-  }
+    if (inH > 9 || (inH === 9 && inM > 15)) {
+      result += " - Late Arrival";
+    }
 
-  return result;
+    return result;
   };
 
   const totalPages = Math.ceil(dailyFeedback.length / itemsPerPage);
@@ -69,8 +68,9 @@ const Feedback = () => {
   );
 
   const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const handleNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-
+  const handleNext = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  // I Used Tailwind CSS Library for styling
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-6">📋 Daily Feedback</h2>
@@ -105,13 +105,16 @@ const Feedback = () => {
                 </p>
 
                 <p>
-                  🧠 Performance: <strong>{entry.performanceScore ?? "—"}</strong>{" "}
+                  🧠 Performance:{" "}
+                  <strong>{entry.performanceScore ?? "—"}</strong>{" "}
                   <span className="text-sm text-gray-600">
                     ({feedbackForPerformance(entry.performanceScore ?? 0)})
                   </span>
                 </p>
 
-                <p>💸 Payroll: <strong>{entry.payroll}</strong></p>
+                <p>
+                  💸 Payroll: <strong>{entry.payroll}</strong>
+                </p>
               </div>
             ))}
           </div>

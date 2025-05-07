@@ -59,7 +59,9 @@ const Profile = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      await axiosPublic.patch(`/users/${userData._id}/attendance/delete`, { date });
+      await axiosPublic.patch(`/users/${userData._id}/attendance/delete`, {
+        date,
+      });
       refreshData();
     } catch {
       Swal.fire("Error", "Failed to delete entry", "error");
@@ -67,7 +69,7 @@ const Profile = () => {
   };
 
   if (!userData) return <p className="p-4">Loading profile...</p>;
-
+  // I Used Tailwind CSS Library for styling
   return (
     <div className="max-w-6xl mx-auto bg-white p-4 sm:p-6 md:p-8 rounded shadow">
       <div className="mb-8 text-center">
@@ -78,29 +80,37 @@ const Profile = () => {
       </div>
 
       <div className="space-y-3 text-sm md:text-base mb-6">
-        <p><strong>Name:</strong> {userData.name}</p>
-        <p><strong>Email:</strong> {userData.email}</p>
-        <p><strong>Employee ID:</strong> {userData.employeeId}</p>
-        <p><strong>Role:</strong> {userData.role}</p>
+        <p>
+          <strong>Name:</strong> {userData.name}
+        </p>
+        <p>
+          <strong>Email:</strong> {userData.email}
+        </p>
+        <p>
+          <strong>Employee ID:</strong> {userData.employeeId}
+        </p>
+        <p>
+          <strong>Role:</strong> {userData.role}
+        </p>
       </div>
 
       <h3 className="text-xl font-semibold mb-2">📅 Weekly Attendance</h3>
       <div className="overflow-x-auto">
         <table className="w-full text-sm border border-gray-300">
-        <thead>
-  <tr className="bg-blue-100 text-left">
-    <th className="p-2 border">Date</th>
-    <th className="p-2 border">Day</th>
-    <th className="p-2 border">Clock In</th>
-    <th className="p-2 border">Clock Out</th>
-    <th className="p-2 border">Payroll ($)</th>
-    <th className="p-2 border">Communication (0–10)</th>
-    <th className="p-2 border">Performance (0–10)</th>
-    {userData.role === "admin" && (
-      <th className="p-2 border text-center">Actions</th>
-    )}
-  </tr>
-</thead>
+          <thead>
+            <tr className="bg-blue-100 text-left">
+              <th className="p-2 border">Date</th>
+              <th className="p-2 border">Day</th>
+              <th className="p-2 border">Clock In</th>
+              <th className="p-2 border">Clock Out</th>
+              <th className="p-2 border">Payroll ($)</th>
+              <th className="p-2 border">Communication (0–10)</th>
+              <th className="p-2 border">Performance (0–10)</th>
+              {userData.role === "admin" && (
+                <th className="p-2 border text-center">Actions</th>
+              )}
+            </tr>
+          </thead>
 
           <tbody>
             {[...(userData.attendance || [])].reverse().map((day, index) => (

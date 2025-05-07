@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
+  // I Used Tailwind CSS Library for styling
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Banner */}

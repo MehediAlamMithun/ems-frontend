@@ -7,10 +7,17 @@ const AllUsers = () => {
   const [users, setUsers] = useState([]);
 
   // Admin can assign any of these roles
-  const roles = ["employee", "supervisor", "manager", "general manager", "admin"];
+  const roles = [
+    "employee",
+    "supervisor",
+    "manager",
+    "general manager",
+    "admin",
+  ];
 
   useEffect(() => {
-    axiosSecure.get("/users")
+    axiosSecure
+      .get("/users")
       .then((res) => setUsers(res.data))
       .catch((err) => console.error("❌ Failed to fetch users:", err));
   }, [axiosSecure]);
@@ -35,7 +42,7 @@ const AllUsers = () => {
       Swal.fire(" Error", "Could not update role", "error");
     }
   };
-
+  // I Used Tailwind CSS Library for styling
   return (
     <div className="p-6 max-w-5xl mx-auto bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-4">👥 Manage User Roles</h2>

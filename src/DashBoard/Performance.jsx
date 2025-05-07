@@ -6,7 +6,7 @@ const Performance = () => {
   const axiosPublic = UseAxiosPublic();
   const [users, setUsers] = useState([]);
   const [userId, setUserId] = useState("");
-  const [date, setDate] = useState(""); 
+  const [date, setDate] = useState("");
   const [score, setScore] = useState("");
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const Performance = () => {
       Swal.fire("Error", "Update failed", "error");
     }
   };
-
+  // I Used Tailwind CSS Library for styling
   return (
     <div className="max-w-xl mx-auto p-6 bg-white rounded shadow">
       <h2 className="text-xl font-bold mb-4 text-center">

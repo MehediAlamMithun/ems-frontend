@@ -30,7 +30,11 @@ const Payroll = () => {
         payroll: amount,
       });
 
-      Swal.fire("Success", response.data.message || "Payroll updated", "success");
+      Swal.fire(
+        "Success",
+        response.data.message || "Payroll updated",
+        "success"
+      );
       setSelectedUserId("");
       setDate("");
       setAmount("");
@@ -39,7 +43,7 @@ const Payroll = () => {
       Swal.fire("Error", "Failed to update payroll", "error");
     }
   };
-
+  // I Used Tailwind CSS Library for styling
   return (
     <div className="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md mt-6">
       <h2 className="text-2xl font-bold mb-4 text-center">🧾 Update Payroll</h2>

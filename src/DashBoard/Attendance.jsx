@@ -20,7 +20,7 @@ const Attendance = () => {
     const now = new Date();
     const weekDay = now.toLocaleDateString("en-US", { weekday: "long" });
     const date = now.toISOString().split("T")[0];
-    const time = now.toTimeString().split(" ")[0].slice(0, 5); // HH:mm
+    const time = now.toTimeString().split(" ")[0].slice(0, 5); 
     return { date, weekDay, time };
   };
 

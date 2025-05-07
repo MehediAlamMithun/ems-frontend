@@ -6,7 +6,7 @@ const Performance = () => {
   const axiosPublic = UseAxiosPublic();
   const [users, setUsers] = useState([]);
   const [userId, setUserId] = useState("");
-  const [date, setDate] = useState(""); // ✅ You missed this
+  const [date, setDate] = useState(""); 
   const [score, setScore] = useState("");
 
   useEffect(() => {

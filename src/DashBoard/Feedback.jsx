@@ -15,34 +15,51 @@ const Feedback = () => {
         const res = await axiosSecure.get(`/feedback?email=${user?.email}`);
         setDailyFeedback(res.data.dailyFeedback || []);
       } catch (err) {
-        console.error("❌ Failed to fetch feedback:", err);
+        console.error(" Failed to fetch feedback:", err);
       }
     };
     if (user?.email) fetchFeedback();
   }, [user?.email, axiosSecure]);
 
   const feedbackForCommunication = (rating) => {
-    if (rating >= 8) return "🌟 Excellent";
-    if (rating >= 6) return "👍 Good";
-    if (rating > 0) return " Needs Improvement";
-    return "❌ Not Rated";
+    if (rating >= 8) return " Outstanding";
+    if (rating >= 6) return "Average";
+    if (rating > 0) return "Needs Improvement And Contact HR";
+    return " Not Rated";
   };
 
   const feedbackForPerformance = (score) => {
-    if (score >= 8) return "🌟 Outstanding";
-    if (score >= 5) return "✅ Satisfactory";
-    if (score > 0) return "⚠️ Could Improve";
-    return "❌ No Mark Given";
+    if (score >= 8) return "Excellent";
+    if (score >= 5) return " Satisfactory, Could Improve";
+    if (score > 0) return " Contact HR";
+    return " No Mark Given";
   };
 
   const feedbackForAttendance = (clockIn, clockOut) => {
-    if (!clockIn || !clockOut) return "❌ Missing";
-    const [inH, inM] = clockIn.split(":").map(Number);
-    const [outH, outM] = clockOut.split(":").map(Number);
-    const worked = (outH + outM / 60) - (inH + inM / 60);
-    if (worked >= 8) return `✅ Full Shift (${worked.toFixed(1)} hrs)`;
-    if (worked > 0) return `⚠️ Partial Shift (${worked.toFixed(1)} hrs)`;
-    return "❌ Invalid Time";
+    if (!clockIn || !clockOut) return "Missing";
+
+  const [inH, inM] = clockIn.split(":").map(Number);
+  const [outH, outM] = clockOut.split(":").map(Number);
+  const worked = (outH + outM / 60) - (inH + inM / 60);
+
+  let result = "";
+
+  if (worked >= 9) {
+    result = `Overtime (${worked.toFixed(1)} hrs)`;
+  } else if (worked >= 8) {
+    result = `Full Shift (${worked.toFixed(1)} hrs)`;
+  } else if (worked > 0) {
+    result = `Partial Shift (${worked.toFixed(1)} hrs)`;
+  } else {
+    return "Invalid Time";
+  }
+
+  
+  if (inH > 9 || (inH === 9 && inM > 15)) {
+    result += " - Late Arrival";
+  }
+
+  return result;
   };
 
   const totalPages = Math.ceil(dailyFeedback.length / itemsPerPage);

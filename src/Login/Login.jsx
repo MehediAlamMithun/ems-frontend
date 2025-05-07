@@ -21,7 +21,7 @@ const Login = () => {
       const userCredential = await login(email, password);
       const { email: userEmail } = userCredential.user;
 
-      // 🔐 Get JWT token from backend
+      //  Get JWT token from backend
       const jwtResponse = await axiosPublic.post("/jwt", {
         email: userEmail,
       });
@@ -29,7 +29,7 @@ const Login = () => {
       // 💾 Store JWT in localStorage
       localStorage.setItem("access-token", jwtResponse.data.token);
 
-      // ✅ Show success message
+      //  Show success message
       Swal.fire({
         title: "Welcome!",
         text: "Login successful.",

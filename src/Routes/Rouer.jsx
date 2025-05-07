@@ -11,7 +11,7 @@ import Attendance from "../DashBoard/Attendance";
 import Payroll from "../DashBoard/PayRoll";
 import Communication from "../DashBoard/Communication";
 import AllUsers from "../DashBoard/AllUsers";
-import PrivateRoute from "../Routes/PrivateRoute"; // ✅ Import this
+import PrivateRoute from "../Routes/PrivateRoute"; 
 import Performance from "../DashBoard/Performance";
 import Feedback from "../DashBoard/Feedback";
 
@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
       { path: "feedback", element: <Feedback /> },
       
 
-      // ✅ Admin-only routes below wrapped with PrivateRoute
+      //Admin-only routes
       {
         path: "payroll",
         element: (

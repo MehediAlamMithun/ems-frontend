@@ -31,8 +31,8 @@ const AllUsers = () => {
         throw new Error("Update failed");
       }
     } catch (error) {
-      console.error("❌ Role update failed:", error);
-      Swal.fire("❌ Error", "Could not update role", "error");
+      console.error("Role update failed:", error);
+      Swal.fire(" Error", "Could not update role", "error");
     }
   };
 

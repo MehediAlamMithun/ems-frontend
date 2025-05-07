@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import UseAdmin from "../Hooks/UseAdmin";
 
@@ -11,8 +10,8 @@ const PrivateRoute = ({ children }) => {
 
   if (loading || isAdminLoading) {
     return (
-      <div className="text-center mt-20 text-lg font-semibold text-blue-600">
-        Loading admin access...
+      <div className="text-center mt-20 text-lg font-medium text-blue-600">
+        Checking access...
       </div>
     );
   }
@@ -21,7 +20,6 @@ const PrivateRoute = ({ children }) => {
     return children;
   }
 
-  // ❌ Not admin — redirect to login or unauthorized page
   return <Navigate to="/unauthorized" state={{ from: location }} replace />;
 };
 

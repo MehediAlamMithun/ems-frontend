@@ -1,3 +1,4 @@
+//React auth
 import React, { createContext, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
